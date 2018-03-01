@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
+                let searchedPhrase = $("#searchInput").val();
+                search(searchedPhrase);
+            });
+
+            function search(searchVal) {
+                let tableBody = document.getElementById("productsTable");
+                let methodArguments = { searchedPhrase:searchVal};
+                $.get("http://localhost:5000/Products/GetAllProducts",methodArguments,
+                    function (data, status) {
+                        for (let i = 0; i < data.length; i++) {
+                            console.log(data[i]);
+                            let newTr = document.createElement("tr");
+                            let nameTd = document.createElement("td");
+                            productsTable.appendChild(newTr);
+                            let idTd = document.createElement("td");
+                            idTd.innerText = data[i].productID;
+                            newTr.appendChild(idTd);
+                            nameTd.innerText = data[i].productName;
+                            newTr.appendChild(nameTd);
+                            let supplierTd = document.createElement("td");
+                            supplierTd.innerText = data[i].supplierID;
+                            newTr.appendChild(supplierTd);
+                            let categoryTd = document.createElement("td");
+                            categoryTd.innerText = data[i].categoryID;
+                            newTr.appendChild(categoryTd);
+                            tablebody.appendChild(newTr);
+                            let unitTd = document.createElement("td");
+                            unitTd.innerText = data[i].unitPrice;
+                            newTr.appendChild(unitTd);
+                            let discontinuedTd = document.createElement("td");
+                            discontinuedTd.innerText = data[i].discontinued;
+                            newTr.appendChild(discontinuedTd);
+                        }
+
+
+                    });
+
+            }
+
+        })
+    </script>
+</head>
+
+<body>
+    <input type="text" id="searchInput">
+    <button id="searchButton">Search</button>
+    <table id=productsTable border=1>
+        <thead>
+            <th>productid</th>
+            <th>productname</th>
+            <th>supplierid</th>
+            <th>categoryid</th>
+            <th>unitprice</th>
+            <th>discontinued</th>
+        </thead>
+        <tbody id=tablebody>
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

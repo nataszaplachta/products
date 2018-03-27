@@ -1,3 +1,4 @@
+namespace web1.Models {
 public class Product {
     public int ProductID{get;set;}
 
@@ -10,4 +11,5 @@ public class Product {
     public double UnitPrice{get;set;}
 
     public bool Discontinued {get;set;}
+}
 }

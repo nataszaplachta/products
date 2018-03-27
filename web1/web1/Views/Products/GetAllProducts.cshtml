@@ -1,0 +1,52 @@
+@using web1.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper AuthoringTagHelpers.TagHelpers.EmailTagHelper, AuthoringTagHelpers
+@{
+    string baseUrl="http://localhost:5000/Products/GetAllProducts";
+    int currentPage=int.Parse(ViewData["currentPage"].ToString());   
+    string sortBy=ViewData["sortBy"].ToString();
+    int previousPage=currentPage-1;
+    int nextPage=currentPage+1;
+
+    
+if(@currentPage>0){<a asp-controller="Products" asp-action="GetAllProducts" asp-route-sortBy=@sortBy asp-route-page=@previousPage>Previous Page</a>}
+
+
+}<a asp-controller="Products" asp-action="GetAllProducts" asp-route-sortBy=@sortBy asp-route-page=@nextPage>Next Page</a>
+<div class="search-container">
+<form action="/Products/GetAllProducts" method="GET">
+    <input name="searchPhrase" type="text" placeholder="Search">
+    <button type="submit"><i class="fa fa-search"></i>Search</button>
+</form>
+</div>
+<table class="table">
+    <thead>
+        <th>@Html.ActionLink("Product Name","GetAllProducts","Products",new {sortBy="ProductName",page=currentPage})</th>
+        <th>@Html.ActionLink("Supplier ID","GetAllProducts","Products",new {sortBy="supplierID",page=currentPage})</th>
+        <th>@Html.ActionLink("Category ID","GetAllProducts","Products",new {sortBy="CategoryID",page=currentPage})</th>
+        <th>@Html.ActionLink("Unit Price","GetAllProducts","Products",new {sortBy="UnitPrice",page=currentPage})</th>
+        </thead>
+@{
+    
+    // List<string> listaTemp=(List<string>)ViewData["lista"];
+    // foreach (string x in listaTemp)
+    // {
+    //     <h1>@x</h1>
+    // }
+    
+   
+    List<Product> listaTemp=(List<Product>)ViewData["Product"];
+    foreach (Product x in listaTemp)
+    {
+        <tr>
+        <td>@x.ProductName</td>
+        <td>@x.SupplierID</td>
+        <td>@x.CategoryID</td>
+        <td>@x.UnitPrice</td>
+        </tr>
+    }
+     
+}</table>
+
+
+

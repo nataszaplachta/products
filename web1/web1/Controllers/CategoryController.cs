@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class CategoryController:Controller
 {
+       [HttpGet]
     public List<Category> GetAllCategories()
     {
         SqlConnection connection = new SqlConnection();
@@ -26,6 +27,10 @@ public class CategoryController:Controller
             temp.categoryName = reader["categoryname"].ToString();
             categoryNames.Add(temp);
         }
-        return categoryNames;
-    }
+        return categoryNames; }
+         [HttpPost]
+        public Category AddCategory([FromBody] Category category)
+        {
+            return category;
+        }
 }
